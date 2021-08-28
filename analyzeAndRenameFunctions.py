@@ -3,6 +3,7 @@
     - Change function name identification to regex
     - Propogate changes up the function tree
     - Categorize APIs
+    - Test
 '''
 
 import idautils
