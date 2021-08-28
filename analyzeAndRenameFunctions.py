@@ -3,7 +3,6 @@
     - Change function name identification to regex
     - Propogate changes up the function tree
     - Categorize APIs
-    - Test
 '''
 
 import idautils
@@ -22,7 +21,7 @@ listCryptAPI = ['CryptAcquireContextW', 'CryptCreateHash', 'CryptHashData', 'Cry
 listMutexAPI = ['CreateMutex', 'CreateEvent', 'CreateSemaphore', 'CreateNamedPipe']
 
 dictAPItoCode = {
-    # Registry
+    # Registry - (c)reate, (d)elete, (e)num, (g)et, (o)pen, (q)uery, (s)set
     'RegCreateKey':'REGc',
     'RegDeleteKey':'REGd',
     'RegDeleteKeyValue':'REGd',
@@ -34,7 +33,7 @@ dictAPItoCode = {
     'RegSetKeyValue':'REGs',
     'RegSetValue':'REGs',
 
-    # Process
+    # Process - (c)reate, (e)num, (o)pen, (r)ead, (w)rite
     'CreateProcess':'PROCc',
     'CreateProcessAsUser':'PROCc',
     'CreateProcessWithLogon':'PROCc',
@@ -47,7 +46,7 @@ dictAPItoCode = {
     'ShellExecute':'PROCc',
     'WriteProcessMemory':'PROCw',
 
-    # Networking
+    # Networking - (c)onnect, (o)pen, (r)eceive, (s)end
     'HttpOpenRequest':'NETo',
     'HttpReceiveHttpRequest':'NETr',
     'HttpSendRequest':'NETs',
@@ -77,7 +76,7 @@ dictAPItoCode = {
     'sendto':'NETs',
     'socket':'NET',
 
-    # File
+    # File - (c)reate, (d)elete, (e)num, (o)pen, (r)ead, (w)rite
     'CopyFile':'FILE',
     'CreateFile':'FILEc',
     'DeleteFile':'FILEd',
@@ -96,16 +95,16 @@ dictAPItoCode = {
     'fscan':'FILE',
     'fwrite':'FILEw',
 
-    # Service
+    # Service - (c)reate, (d)elete, (o)pen, (q)uery, (s)tart
     'ChangeServiceConfig':'SVC',
     'CreateService':'SVCc',
     'DeleteService':'SVCd',
     'OpenService':'SVCo',
     'QueryServiceConfig':'SVCq',
     'QueryServiceStatus':'SVCq',
-    'StartService':'SVC',
+    'StartService':'SVCs',
 
-    # Thread
+    # Thread - (c)reate, (o)pen
     'CreateThread':'THRDc',
     'OpenThread':'THRDo',
     'ResumeThread':'THRD',
