@@ -1,8 +1,9 @@
 '''
     To Do:
+    - Categorize APIs
+    - Order/group categories when renaming
     - Change function name identification to regex
     - Propogate changes up the function tree
-    - Categorize APIs
 '''
 
 import idautils
@@ -10,6 +11,7 @@ import idc
 
 #globalAnalyzedFuncs = list()
 
+'''
 listNetworkAPI = ['InternetOpen', 'HttpOpenRequest', 'HttpSendRequest', 'InternetReadFile']
 listKeyloggingAPI = ['GetAsyncKeyState', 'SetWindowsHookEx']
 listResourceAPI = ['FindResourceA', 'LockResource']
@@ -19,6 +21,7 @@ listInjectionAPI = ['GetProcAddress', 'OpenProcess', 'VirtualAllocEx', 'WritePro
 listFileAPI = ['CreateFile', 'WriteFile']
 listCryptAPI = ['CryptAcquireContextW', 'CryptCreateHash', 'CryptHashData', 'CryptDeriveKey', 'CryptDecrypt', 'CryptReleaseContext', 'CryptDestroyHash', 'CryptDestroyKey']
 listMutexAPI = ['CreateMutex', 'CreateEvent', 'CreateSemaphore', 'CreateNamedPipe']
+'''
 
 dictAPItoCode = {
     # Registry - (c)reate, (d)elete, (e)num, (g)et, (o)pen, (q)uery, (s)set
@@ -83,16 +86,16 @@ dictAPItoCode = {
     'FindFirstFile':'FILEe',
     'FindNextFile':'FILEe',
     'MoveFile':'FILE',
-    'ReadFile':'FILEe',
+    'ReadFile':'FILEr',
     'WriteFile':'FILEw',
-    'fgetc':'FILE',
-    'fgets':'FILE',
+    'fgetc':'FILEr',
+    'fgets':'FILEr',
     'fopen':'FILEo',
-    'fprintf':'FILE',
+    'fprintf':'FILEw',
     'fputc':'FILEw',
     'fputs':'FILEw',
     'fread':'FILEr',
-    'fscan':'FILE',
+    'fscan':'FILEr',
     'fwrite':'FILEw',
 
     # Service - (c)reate, (d)elete, (o)pen, (q)uery, (s)tart
@@ -163,6 +166,7 @@ def analyzeFunctions(startEA):
 
             funcInfo = idaapi.get_func(func)
             analyzeFunctions(funcInfo.start_ea)
+            # Append/merge child function names here
 
     # Analyze based on function names
     newFuncName = 'f_' + idc.get_func_name(startEA) + "__"
@@ -173,6 +177,7 @@ def analyzeFunctions(startEA):
             funcName = funcName[:-1]
         if funcName.endswith('Ex'):
             funcName = funcName[:-2]
+
         newFuncName = newFuncName + dictAPItoCode.get(funcName, "")
 
     '''
@@ -215,6 +220,8 @@ def analyzeFunctions(startEA):
 
     # Rename
     idc.set_name(startEA, newFuncName, SN_CHECK)
+
+    # Return merged list of function names
 
 #
 #-> def analyzeFunctions(startEA):
