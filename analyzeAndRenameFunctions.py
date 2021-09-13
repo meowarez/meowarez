@@ -289,7 +289,7 @@ def renameFunction(funcEA):
         # TODO: Check if thunk
         #
         #return 'f_p__zc_sub_%x__xref_%d' % (funcEA, funcXrefTo)
-        return '{:s}zc_{:s}{:s}__xref_{:02d}'.format('f_p__', 'sub_', funcEA, funcXrefTo)
+        return '{:s}zc_{:s}{:x}__xref_{:02d}'.format('f_p__', 'sub_', funcEA, funcXrefTo)
 
     apiUsed = set()
 
